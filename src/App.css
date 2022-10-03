@@ -1,0 +1,21 @@
+body {
+    background-color: ghostwhite;
+}
+
+#root{
+  height: 100vh;
+  user-select: none;
+}
+
+.calculator{
+  width: 20rem;
+  background-color: black;
+  border: 2px solid #4d4c4c;
+  color: ghostwhite;
+  margin-top: 3rem;
+  padding: 0.5rem;
+}
+
+.btn{
+  border-radius: 0;
+}
