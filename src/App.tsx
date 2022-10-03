@@ -2,6 +2,7 @@ import './App.css'
 
 export default function App() {
   return (
-    <main></main>
+    <main>
+    </main>
   )
 }
