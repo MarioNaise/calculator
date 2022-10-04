@@ -1,58 +1,56 @@
-import React from "react"
-import './App.css'
-import { FormulaState, DisplayState } from "./interfaces.js"
+import React from "react";
+import './App.css';
+import { AppState } from "./interfaces.js";
 
-export default class App extends React.Component {
+export default class App extends React.Component<{}, AppState> {
   constructor(props: {}){
     super(props);
+    this.state={
+      formula: "",
+      display: "0"
+    }
+    this.handleClear = this.handleClear.bind(this);
   }
+  
+  handleClear(){
+    this.setState({
+      formula: "",
+      display: "0"
+    })
+  }
+
+  
   render(){
     return (<div className="calculator container">
-      <Formula />
-      <Display />
-      <Buttons />
+      <Formula formula={this.state.formula}/>
+      <Display display={this.state.display} />
+      <Buttons handleClear={this.handleClear} />
     </div>
   )
   }
 }
 
-class Formula extends React.Component<{}, FormulaState> {
-  constructor(props: {}){
-    super(props);
-    this.state={
-      formula: "0"
-    }
-  }
-  render(){
-    return (<div className="text-end text-warning fs-5">
-      {this.state.formula}
+function Formula(props: {formula: string}): JSX.Element{
+    return (<div id="formula" className="text-end text-warning fs-5">
+      {props.formula}
     </div>
   )
-  }
 }
 
-class Display extends React.Component<{}, DisplayState> {
-  constructor(props: {}){
-    super(props);
-    this.state={
-      result: "0"
-    }
-  }
-  render(){
+function Display(props: {display: string}): JSX.Element{
     return (<div id="display" className="text-end fs-4">
-      {this.state.result}
+      {props.display}
     </div>
   )
-  }
 }
 
-class Buttons extends React.Component {
-  constructor(props: {}){
+class Buttons extends React.Component<{handleClear: any}, {}> {
+  constructor(props: any){
     super(props);
   }
   render(){
     return (<div>
-      <button id="clear" className="btn btn-danger col-6 border-dark">AC</button>
+      <button onClick={this.props.handleClear} id="clear" className="btn btn-danger col-6 border-dark">AC</button>
       <button id="divide" className="btn btn-light col-3 border-dark">/</button>
       <button id="multiply" className="btn btn-light col-3 border-dark">X</button>
       <button id="seven" className="btn btn-secondary col-3 border-dark">7</button>

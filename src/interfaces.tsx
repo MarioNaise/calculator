@@ -1,7 +1,4 @@
-export interface FormulaState {
+export interface AppState {
   formula: string;
-}
-
-export interface DisplayState {
-  result: string;
+  display: string;
 }

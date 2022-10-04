@@ -18,4 +18,9 @@ body {
 
 .btn{
   border-radius: 0;
+  height: 5rem;
+}
+
+#formula{
+  height: 1rem;
 }
