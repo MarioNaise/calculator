@@ -1,8 +1,9 @@
 import React from "react"
 import './App.css'
+import { FormulaState, DisplayState } from "./interfaces.js"
 
 export default class App extends React.Component {
-  constructor(props){
+  constructor(props: {}){
     super(props);
   }
   render(){
@@ -15,23 +16,23 @@ export default class App extends React.Component {
   }
 }
 
-class Formula extends React.Component {
-  constructor(props){
+class Formula extends React.Component<{}, FormulaState> {
+  constructor(props: {}){
     super(props);
     this.state={
-      formula: ""
+      formula: "0"
     }
   }
   render(){
-    return (<div className="text-end text-warning fs-4">
+    return (<div className="text-end text-warning fs-5">
       {this.state.formula}
     </div>
   )
   }
 }
 
-class Display extends React.Component {
-  constructor(props){
+class Display extends React.Component<{}, DisplayState> {
+  constructor(props: {}){
     super(props);
     this.state={
       result: "0"
