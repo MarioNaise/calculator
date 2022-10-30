@@ -15,6 +15,7 @@ export default class App extends React.Component<{}, AppState> {
     this.handleButton = this.handleButton.bind(this);
     this.handleDecimal = this.handleDecimal.bind(this);
     this.handleResult = this.handleResult.bind(this);
+    this.handleOperator = this.handleOperator.bind(this);
   }
 
   handleClear() {
@@ -72,7 +73,7 @@ export default class App extends React.Component<{}, AppState> {
     return (<div className="calculator container">
       <Formula formula={this.state.formula} />
       <Display display={this.state.display} />
-      <Buttons handleClear={this.handleClear} handleButton={this.handleButton} handleResult={this.handleResult} handleDecimal={this.handleDecimal} />
+      <Buttons handleClear={this.handleClear} handleButton={this.handleButton} handleOperator={this.handleOperator} handleResult={this.handleResult} handleDecimal={this.handleDecimal} />
     </div>
     )
   }
@@ -92,23 +93,23 @@ function Display(props: { display: string }): JSX.Element {
   )
 }
 
-class Buttons extends React.Component<{ handleClear: any; handleButton: any; handleResult: any; handleDecimal: any }, {}> {
+class Buttons extends React.Component<{ handleClear: any; handleButton: any; handleOperator: any; handleResult: any; handleDecimal: any }, {}> {
   constructor(props: any) {
     super(props);
   }
   render() {
     return (<div>
       <button onClick={this.props.handleClear} id="clear" className="btn btn-danger col-6 border-dark">AC</button>
-      <button id="divide" onClick={this.props.handleButton} value="/" className="btn btn-light col-3 border-dark">/</button>
-      <button id="multiply" onClick={this.props.handleButton} value="*" className="btn btn-light col-3 border-dark">X</button>
+      <button id="divide" onClick={this.props.handleOperator} value="/" className="btn btn-light col-3 border-dark">/</button>
+      <button id="multiply" onClick={this.props.handleOperator} value="*" className="btn btn-light col-3 border-dark">X</button>
       <button onClick={this.props.handleButton} id="seven" value="7" className="btn btn-secondary col-3 border-dark">7</button>
       <button id="eight" onClick={this.props.handleButton} value="8" className="btn btn-secondary col-3 border-dark">8</button>
       <button id="nine" onClick={this.props.handleButton} value="9" className="btn btn-secondary col-3 border-dark">9</button>
-      <button id="subtract" onClick={this.props.handleButton} value="-" className="btn btn-light col-3 border-dark">-</button>
+      <button id="subtract" onClick={this.props.handleOperator} value="-" className="btn btn-light col-3 border-dark">-</button>
       <button id="four" onClick={this.props.handleButton} value="4" className="btn btn-secondary col-3 border-dark">4</button>
       <button id="five" onClick={this.props.handleButton} value="5" className="btn btn-secondary col-3 border-dark">5</button>
       <button id="six" onClick={this.props.handleButton} value="6" className="btn btn-secondary col-3 border-dark">6</button>
-      <button id="add" onClick={this.props.handleButton} value="+" className="btn btn-light col-3 border-dark">+</button>
+      <button id="add" onClick={this.props.handleOperator} value="+" className="btn btn-light col-3 border-dark">+</button>
       <button id="one" onClick={this.props.handleButton} value="1" className="btn btn-secondary col-3 border-dark">1</button>
       <button id="two" onClick={this.props.handleButton} value="2" className="btn btn-secondary col-3 border-dark">2</button>
       <button id="three" onClick={this.props.handleButton} value="3" className="btn btn-secondary col-3 border-dark">3</button>
