@@ -56,8 +56,13 @@ export default class App extends React.Component<{}, AppState> {
       })
   }
   
-  handleDecimal(){
-    console.log(".")
+  handleDecimal(e: any){
+    if(this.state.display.indexOf(".") < 0){
+      this.setState({
+        formula: this.state.formula + e.target.value,
+        display: this.state.display + e.target.value
+      })
+    }
   }
 
   handleResult(){
