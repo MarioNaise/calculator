@@ -67,10 +67,16 @@ export default class App extends React.Component<{}, AppState> {
 
   handleResult(){
     const result = eval(this.state.formula);
+    if(!result){
+      this.setState({
+      display: "-"
+    });
+    } else {
     this.setState({
       formula: `${this.state.formula}=${result}`,
       display: result
     });
+    }
   }
 
 
