@@ -50,6 +50,11 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   handleOperator(e: any){
+    // if last was operator ->
+    //   if new is not minus
+    //     change to new operator
+    //   if new is minus && display length == 1
+    //     add minus
     this.setState({
         formula: this.state.formula + e.target.value,
         display: e.target.value,
