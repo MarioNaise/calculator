@@ -40,7 +40,7 @@ export default class App extends React.Component<{}, AppState> {
         display: e.target.value
       })
       }
-    } else {
+    } else if(this.state.display.length < 16){
       this.setState({
         formula: this.state.formula + e.target.value,
         display: this.state.display + e.target.value
@@ -52,7 +52,7 @@ export default class App extends React.Component<{}, AppState> {
   handleOperator(e: any){
     this.setState({
         formula: this.state.formula + e.target.value,
-        display: e.target.value
+        display: e.target.value,
       })
   }
   
