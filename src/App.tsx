@@ -49,16 +49,43 @@ export default class App extends React.Component<{}, AppState> {
 
   }
 
+  isOperator(){
+    if (this.state.display == "+" ||
+       this.state.display == "-" ||
+       this.state.display == "/" ||
+       this.state.display == "*"){
+        return true;
+       } else {
+        return false;
+       }
+  }
+
   handleOperator(e: any){
-    // if last was operator ->
-    //   if new is not minus
-    //     change to new operator
-    //   if new is minus && display length == 1
-    //     add minus
+    if(this.isOperator() && e.target.value !== "-"){
+      if(this.state.display.length === 0){
+        this.setState({
+          formula: this.state.formula.slice(0, this.state.formula.length-1) + e.target.value,
+          display: e.target.value,
+        })
+      } else {
+        this.setState({
+          formula: this.state.formula.slice(0, this.state.formula.length-2) + e.target.value,
+          display: e.target.value,
+        })
+      }
+    } else if(this.isOperator() && e.target.value === "-" && this.state.display.length === 1){
+      this.setState({
+        formula: this.state.formula + e.target.value,
+        display: e.target.value,
+      })
+    } else if(this.isOperator() && this.state.display.length > 1){
+      return;
+    } else {
     this.setState({
         formula: this.state.formula + e.target.value,
         display: e.target.value,
       })
+    }
   }
   
   handleDecimal(e: any){
