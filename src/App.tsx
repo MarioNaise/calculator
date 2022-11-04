@@ -9,7 +9,8 @@ export default class App extends React.Component<{}, AppState> {
     super(props);
     this.state = {
       formula: "",
-      display: "0"
+      display: "0",
+      currentResult: ""
     }
     this.handleClear = this.handleClear.bind(this);
     this.handleButton = this.handleButton.bind(this);
@@ -21,7 +22,8 @@ export default class App extends React.Component<{}, AppState> {
   handleClear() {
     this.setState({
       formula: "",
-      display: "0"
+      display: "0",
+      currentResult: ""
     })
   }
 
@@ -60,33 +62,7 @@ export default class App extends React.Component<{}, AppState> {
        }
   }
 
-  handleOperator(e: any){
-    if(this.isOperator() && e.target.value !== "-"){
-      if(this.state.display.length === 0){
-        this.setState({
-          formula: this.state.formula.slice(0, this.state.formula.length-1) + e.target.value,
-          display: e.target.value,
-        })
-      } else {
-        this.setState({
-          formula: this.state.formula.slice(0, this.state.formula.length-2) + e.target.value,
-          display: e.target.value,
-        })
-      }
-    } else if(this.isOperator() && e.target.value === "-" && this.state.display.length === 1){
-      this.setState({
-        formula: this.state.formula + e.target.value,
-        display: e.target.value,
-      })
-    } else if(this.isOperator() && this.state.display.length > 1){
-      return;
-    } else {
-    this.setState({
-        formula: this.state.formula + e.target.value,
-        display: e.target.value,
-      })
-    }
-  }
+  handleOperator(e: any){}
   
   handleDecimal(e: any){
     if(this.state.display.indexOf(".") < 0){
@@ -98,15 +74,29 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   handleResult(){
-    const result = eval(this.state.formula);
+    const {formula}: any = this.state;
+    let result;
+    if(this.state.currentResult){
+      let equalsSigns = [];
+      for(let i = 0; i < this.state.formula.length; i++){
+        if (formula[i]==="="){
+          equalsSigns.push(i);
+        }
+      }
+     result = eval(this.state.formula.slice(equalsSigns[equalsSigns.length-1]+1));
+    } else {
+      result = eval(formula);
+    }
     if(!result){
       this.setState({
-      display: "-"
+      display: "-",
+      currentResult: ""
     });
     } else {
     this.setState({
-      formula: `${this.state.formula}=${result}`,
-      display: result
+      formula: `${formula}=${result}`,
+      display: result,
+      currentResult: result
     });
     }
   }
