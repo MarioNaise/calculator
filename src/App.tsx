@@ -16,7 +16,7 @@ export default class App extends React.Component<{}, AppState> {
     this.handleButton = this.handleButton.bind(this);
     this.handleDecimal = this.handleDecimal.bind(this);
     this.handleResult = this.handleResult.bind(this);
-    this.handleOperator = this.handleOperator.bind(this);
+    //this.handleOperator = this.handleOperator.bind(this);
   }
 
   handleClear() {
@@ -62,7 +62,7 @@ export default class App extends React.Component<{}, AppState> {
        }
   }
 
-  handleOperator(e: any){}
+  //handleOperator(e: any){}
   
   handleDecimal(e: any){
     if(this.state.display.indexOf(".") < 0){
@@ -74,16 +74,18 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   handleResult(){
-    const {formula}: any = this.state;
+    let {formula}: any = this.state;
     let result;
     if(this.state.currentResult){
+      // USE REGEX HERE !!!!!!!!!!!!!!!!!!!
       let equalsSigns = [];
       for(let i = 0; i < this.state.formula.length; i++){
         if (formula[i]==="="){
           equalsSigns.push(i);
         }
       }
-     result = eval(this.state.formula.slice(equalsSigns[equalsSigns.length-1]+1));
+      result = eval(this.state.formula.slice(equalsSigns[equalsSigns.length-1]+1));
+      formula = this.state.currentResult;
     } else {
       result = eval(formula);
     }
