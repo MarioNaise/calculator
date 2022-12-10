@@ -16,7 +16,7 @@ export default class App extends React.Component<{}, AppState> {
     this.handleButton = this.handleButton.bind(this);
     this.handleDecimal = this.handleDecimal.bind(this);
     this.handleResult = this.handleResult.bind(this);
-    //this.handleOperator = this.handleOperator.bind(this);
+    this.handleOperator = this.handleOperator.bind(this);
   }
 
   handleClear() {
@@ -52,17 +52,16 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   isOperator(){
-    if (this.state.display == "+" ||
-       this.state.display == "-" ||
-       this.state.display == "/" ||
-       this.state.display == "*"){
+    if ("+*-/".indexOf(this.state.display)>=0){
         return true;
        } else {
         return false;
        }
   }
 
-  //handleOperator(e: any){}
+  handleOperator(e: any){
+    
+  }
   
   handleDecimal(e: any){
     if(this.state.display.indexOf(".") < 0){
