@@ -52,11 +52,7 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   isOperator(){
-    if ("+*-/".indexOf(this.state.display)>=0){
-        return true;
-       } else {
-        return false;
-       }
+    return "+*-/".indexOf(this.state.display)>0;
   }
 
   handleOperator(e: any){
