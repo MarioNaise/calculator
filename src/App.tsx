@@ -51,12 +51,10 @@ export default class App extends React.Component<{}, AppState> {
 
   }
 
-  operatorInDisplay(){
-    return "+*-/".indexOf(this.state.display)>=0;
-  }
-
   handleOperator(e: any){
-    
+    // is operator on display?
+    // if one operator: minus allowed
+    // if two operator(incl minus): return
   }
   
   handleDecimal(e: any){
