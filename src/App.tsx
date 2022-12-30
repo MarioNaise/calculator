@@ -2,8 +2,6 @@ import React from "react";
 import './App.css';
 import { AppState } from "./interfaces.js";
 
-//let regexOperator: RegExp = /[*+/-]/g;
-
 export default class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
@@ -53,7 +51,11 @@ export default class App extends React.Component<{}, AppState> {
 
   handleOperator(e: any){
     // is operator on display?
-    // if one operator: minus allowed
+    let regexOperator: RegExp = /[*+/-]/g;
+    const isOperator = regexOperator.test(this.state.display)
+    console.log("isOperator", isOperator);
+    // if one operator: minus allowed to append, every other: replace
+    console.log(this.state.display.length)
     // if two operator(incl minus): return
   }
   
