@@ -41,10 +41,21 @@ export default class App extends React.Component<{}, AppState> {
       })
       }
     } else if(this.state.display.length < 16){
-      this.setState({
+
+      let regexOperator: RegExp = /[*+/-]/g;
+      const isOperator = regexOperator.test(this.state.display);
+      
+      if(isOperator){
+        this.setState({
+        formula: this.state.formula + e.target.value,
+        display: e.target.value
+       })
+      } else {
+        this.setState({
         formula: this.state.formula + e.target.value,
         display: this.state.display + e.target.value
-      })
+       })
+      }
     }
 
   }
@@ -52,11 +63,20 @@ export default class App extends React.Component<{}, AppState> {
   handleOperator(e: any){
     // is operator on display?
     let regexOperator: RegExp = /[*+/-]/g;
-    const isOperator = regexOperator.test(this.state.display)
-    console.log("isOperator", isOperator);
+    const isOperator = regexOperator.test(this.state.display);
+    // if no operator, append operator
+    if(!isOperator){
+      this.setState({
+        formula: this.state.formula + e.target.value,
+        display: e.target.value
+      });
+    }
     // if one operator: minus allowed to append, every other: replace
-    console.log(this.state.display.length)
-    // if two operator(incl minus): return
+    if(isOperator && this.state.display.length == 1){
+      console.log("append minus, replace for all other");
+    }
+    // else return
+    return
   }
   
   handleDecimal(e: any){
