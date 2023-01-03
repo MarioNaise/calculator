@@ -42,8 +42,9 @@ export default class App extends React.Component<{}, AppState> {
       }
     } else if(this.state.display.length < 16){
 
-      let regexOperator: RegExp = /[*+/-]/g;
+      let regexOperator: RegExp = /[*+\/-]$/gm;
       const isOperator = regexOperator.test(this.state.display);
+      console.log(isOperator);
       
       if(isOperator){
         this.setState({
@@ -62,8 +63,9 @@ export default class App extends React.Component<{}, AppState> {
 
   handleOperator(e: any){
     // is operator on display?
-    let regexOperator: RegExp = /[*+/-]/g;
+    let regexOperator: RegExp = /[*+\/-]$/mg;
     const isOperator = regexOperator.test(this.state.display);
+    console.log(isOperator);
     // if no operator, append operator
     if(!isOperator){
       this.setState({
