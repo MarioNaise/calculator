@@ -44,7 +44,6 @@ export default class App extends React.Component<{}, AppState> {
 
       let regexOperator: RegExp = /[*+\/-]$/gm;
       const isOperator = regexOperator.test(this.state.display);
-      console.log(isOperator);
       
       if(isOperator){
         this.setState({
@@ -63,22 +62,34 @@ export default class App extends React.Component<{}, AppState> {
 
   handleOperator(e: any){
     // is operator on display?
-    let regexOperator: RegExp = /[*+\/-]$/mg;
+    let regexOperator: RegExp = /^[*+\/-]$/mg;/[*+\/-]/mg
+    let regexContainsOperator: RegExp = /[*+\/-]/mg;
     const isOperator = regexOperator.test(this.state.display);
-    console.log(isOperator);
+    const containsOperator = regexContainsOperator.test(this.state.display);
     // if no operator, append operator
-    if(!isOperator){
+    if(!isOperator && !containsOperator){
       this.setState({
         formula: this.state.formula + e.target.value,
         display: e.target.value
       });
     }
     // if one operator: minus allowed to append, every other: replace
-    if(isOperator && this.state.display.length == 1){
-      console.log("append minus, replace for all other");
-    }
-    // else return
-    return
+
+      if(isOperator && e.target.value !== "-"){
+        this.setState({
+          formula: this.state.formula.slice(0, this.state.formula.length-1) + e.target.value,
+          display: e.target.value
+        });
+      }
+      if(isOperator && e.target.value === "-"){
+        this.setState({
+          formula: this.state.formula + e.target.value,
+          display: this.state.display + e.target.value
+        });
+      }  
+    
+    
+      
   }
   
   handleDecimal(e: any){
@@ -106,7 +117,7 @@ export default class App extends React.Component<{}, AppState> {
     } else {
       result = eval(formula);
     }
-    if(!result){
+    if(!result && result !== 0){
       this.setState({
       display: "-",
       currentResult: ""
@@ -118,6 +129,7 @@ export default class App extends React.Component<{}, AppState> {
       currentResult: result
     });
     }
+    console.log(this.state.formula, "=", result)
   }
 
 
