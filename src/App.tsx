@@ -27,73 +27,81 @@ export default class App extends React.Component<{}, AppState> {
 
   handleButton(e: any) {
     if (this.state.display === "0") {
-      if(this.state.formula === "0" && e.target.value === "0"){
+      if (this.state.formula === "0" && e.target.value === "0") {
         return;
-      } else if(this.state.formula === "0") {
+      } else if (this.state.formula === "0") {
         this.setState({
-        formula: e.target.value,
-        display: e.target.value
-      })
+          formula: e.target.value,
+          display: e.target.value
+        })
       } else {
         this.setState({
-        formula: this.state.formula + e.target.value,
-        display: e.target.value
-      })
+          formula: this.state.formula + e.target.value,
+          display: e.target.value
+        })
       }
-    } else if(this.state.display.length < 16){
+    } else if (this.state.display.length < 16) {
 
       let regexOperator: RegExp = /[*+\/-]$/gm;
       const isOperator = regexOperator.test(this.state.display);
-      
-      if(isOperator){
+
+      if (isOperator) {
         this.setState({
-        formula: this.state.formula + e.target.value,
-        display: e.target.value
-       })
+          formula: this.state.formula + e.target.value,
+          display: e.target.value
+        })
       } else {
         this.setState({
-        formula: this.state.formula + e.target.value,
-        display: this.state.display + e.target.value
-       })
+          formula: this.state.formula + e.target.value,
+          display: this.state.display + e.target.value
+        })
       }
     }
 
   }
 
-  handleOperator(e: any){
+  handleOperator(e: any) {
     // is operator on display?
     let regexOperator: RegExp = /^[*+\/-]$/mg;
     let regexContainsOperator: RegExp = /[*+\/-]$/mg;
     const isOperator = regexOperator.test(this.state.display);
     const containsOperator = regexContainsOperator.test(this.state.display);
     // if no operator, append operator
-    if(!isOperator && !containsOperator){
-      this.setState({
-        formula: this.state.formula + e.target.value,
-        display: e.target.value
-      });
-    }
-    // if one operator: minus allowed to append, every other: replace
-
-      if(isOperator && e.target.value !== "-"){
+    if (!isOperator && !containsOperator) {
+      if (this.state.currentResult) {
         this.setState({
-          formula: this.state.formula.slice(0, this.state.formula.length-1) + e.target.value,
+          formula: this.state.currentResult + e.target.value,
+          display: e.target.value
+        });
+      } else {
+        this.setState({
+          formula: this.state.formula + e.target.value,
           display: e.target.value
         });
       }
-      if(isOperator && e.target.value === "-" && this.state.display[this.state.display.length-1] !== "-"){
-        this.setState({
-          formula: this.state.formula + e.target.value,
-          display: this.state.display + e.target.value
-        });
-      }  
-    
-    
-      
+
+    }
+    // if one operator: minus allowed to append, every other: replace
+
+    if (isOperator && e.target.value !== "-") {
+      this.setState({
+        formula: this.state.formula.slice(0, this.state.formula.length - 1) + e.target.value,
+        display: e.target.value
+      });
+    }
+    if (isOperator && e.target.value === "-" && this.state.display[this.state.display.length - 1] !== "-") {
+      this.setState({
+        formula: this.state.formula + e.target.value,
+        display: this.state.display + e.target.value
+      });
+    }
+
+
+
   }
-  
-  handleDecimal(e: any){
-    if(this.state.display.indexOf(".") < 0){
+
+  handleDecimal(e: any) {
+    if (this.state.display.indexOf(".") < 0) {
       this.setState({
         formula: this.state.formula + e.target.value,
         display: this.state.display + e.target.value
@@ -101,33 +109,32 @@ export default class App extends React.Component<{}, AppState> {
     }
   }
 
-  handleResult(){
-    let {formula}: any = this.state;
+  handleResult() {
+    let { formula }: any = this.state;
     let result;
-    if(this.state.currentResult){
+    if (this.state.currentResult) {
       // USE REGEX HERE !!!!!!!!!!!!!!!!!!!
       let equalsSigns = [];
-      for(let i = 0; i < this.state.formula.length; i++){
-        if (formula[i]==="="){
+      for (let i = 0; i < this.state.formula.length; i++) {
+        if (formula[i] === "=") {
           equalsSigns.push(i);
         }
       }
-      result = eval(this.state.formula.slice(equalsSigns[equalsSigns.length-1]+1));
-      formula = this.state.currentResult;
+      result = eval(this.state.formula.slice(equalsSigns[equalsSigns.length - 1] + 1));
     } else {
       result = eval(formula);
     }
-    if(!result && result !== 0){
+    if (!result && result !== 0) {
       this.setState({
-      display: "-",
-      currentResult: ""
-    });
+        display: "-",
+        currentResult: ""
+      });
     } else {
-    this.setState({
-      formula: `${formula}=${result}`,
-      display: result,
-      currentResult: result
-    });
+      this.setState({
+        formula: `${formula}=${result}`,
+        display: result,
+        currentResult: result
+      });
     }
   }
 
