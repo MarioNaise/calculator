@@ -62,8 +62,8 @@ export default class App extends React.Component<{}, AppState> {
 
   handleOperator(e: any){
     // is operator on display?
-    let regexOperator: RegExp = /^[*+\/-]$/mg;/[*+\/-]/mg
-    let regexContainsOperator: RegExp = /[*+\/-]/mg;
+    let regexOperator: RegExp = /^[*+\/-]$/mg;
+    let regexContainsOperator: RegExp = /[*+\/-]$/mg;
     const isOperator = regexOperator.test(this.state.display);
     const containsOperator = regexContainsOperator.test(this.state.display);
     // if no operator, append operator
@@ -81,7 +81,7 @@ export default class App extends React.Component<{}, AppState> {
           display: e.target.value
         });
       }
-      if(isOperator && e.target.value === "-"){
+      if(isOperator && e.target.value === "-" && this.state.display[this.state.display.length-1] !== "-"){
         this.setState({
           formula: this.state.formula + e.target.value,
           display: this.state.display + e.target.value
@@ -129,7 +129,6 @@ export default class App extends React.Component<{}, AppState> {
       currentResult: result
     });
     }
-    console.log(this.state.formula, "=", result)
   }
 
 
