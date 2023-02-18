@@ -70,8 +70,8 @@ export default class App extends React.Component<{}, AppState> {
       containsOperator = regexContainsOperator.test(this.state.display);
 
     // if display is empty -> return
-    if(!this.state.formula) return;
-    
+    if (!this.state.formula) return;
+
     // if no operator, append operator
     if (!isOperator && !containsOperator) {
       if (this.state.currentResult) {
