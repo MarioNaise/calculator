@@ -62,10 +62,16 @@ export default class App extends React.Component<{}, AppState> {
 
   handleOperator(e: any) {
     // is operator on display?
-    let regexOperator: RegExp = /^[*+\/-]$/mg;
-    let regexContainsOperator: RegExp = /[*+\/-]$/mg;
-    const isOperator = regexOperator.test(this.state.display);
-    const containsOperator = regexContainsOperator.test(this.state.display);
+    const regexIsOperator: RegExp = /^[*+\/-]$/mg,
+      regexTwoOperators: RegExp = /[*+\/-]{2,}/mg,
+      regexContainsOperator: RegExp = /[*+\/-]$/mg,
+      isOperator = regexIsOperator.test(this.state.display),
+      hasTwoOperators = regexTwoOperators.test(this.state.display),
+      containsOperator = regexContainsOperator.test(this.state.display);
+
+    // if display is empty -> return
+    if(!this.state.formula) return;
+    
     // if no operator, append operator
     if (!isOperator && !containsOperator) {
       if (this.state.currentResult) {
@@ -83,25 +89,29 @@ export default class App extends React.Component<{}, AppState> {
 
     }
     // if one operator: minus allowed to append, every other: replace
-
     if (isOperator && e.target.value !== "-") {
       this.setState({
-        formula: this.state.formula.slice(0, this.state.formula.length - 1) + e.target.value,
+        formula: this.state.formula.replace(regexContainsOperator, e.target.value),
         display: e.target.value
       });
     }
-    if (isOperator && e.target.value === "-" && this.state.display[this.state.display.length - 1] !== "-") {
+    if (isOperator && e.target.value === "-" && !this.state.display.endsWith("-")) {
       this.setState({
         formula: this.state.formula + e.target.value,
         display: this.state.display + e.target.value
       });
     }
-
-
-
+    // if two operators: replace both operators with new one (except minus)
+    if (hasTwoOperators && e.target.value !== "-") {
+      this.setState({
+        formula: this.state.formula.replace(regexTwoOperators, e.target.value),
+        display: e.target.value
+      });
+    }
   }
 
   handleDecimal(e: any) {
+    if (this.state.currentResult) return;
     if (this.state.display.indexOf(".") < 0) {
       this.setState({
         formula: this.state.formula + e.target.value,
@@ -114,14 +124,7 @@ export default class App extends React.Component<{}, AppState> {
     let { formula }: any = this.state;
     let result;
     if (this.state.currentResult) {
-      // USE REGEX HERE !!!!!!!!!!!!!!!!!!!
-      let equalsSigns = [];
-      for (let i = 0; i < this.state.formula.length; i++) {
-        if (formula[i] === "=") {
-          equalsSigns.push(i);
-        }
-      }
-      result = eval(this.state.formula.slice(equalsSigns[equalsSigns.length - 1] + 1));
+      return;
     } else {
       result = eval(formula);
     }
