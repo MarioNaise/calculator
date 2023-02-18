@@ -18,7 +18,6 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   handleClear() {
-    console.log("clear: ", this.state.formula);
     this.setState({
       formula: "",
       display: "0",
@@ -135,7 +134,6 @@ export default class App extends React.Component<{}, AppState> {
         currentResult: ""
       });
     } else {
-      console.log(`${formula}=${result}`);
       this.setState({
         formula: `${formula}=${result}`,
         display: result,
