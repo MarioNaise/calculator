@@ -70,6 +70,7 @@ export default class App extends React.Component<{}, AppState> {
     if (!isOperator && !containsOperator) {
       if (this.state.currentResult) {
         this.setState({
+          currentResult: "",
           formula: this.state.currentResult + e.target.value,
           display: e.target.value
         });
